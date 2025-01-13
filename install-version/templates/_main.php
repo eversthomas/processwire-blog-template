@@ -17,14 +17,55 @@ $home = $pages->get('/'); /** @var HomePage $home */
 ?><!DOCTYPE html>
 <html lang="de">
 	<head id="html-head">
-	    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title><?php echo $page->title; ?></title>
-        <meta name="description" content="A simple HTML5 Template for new projects.">
-        <meta name="author" content="SitePoint">
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title><?= $page->seo_title ? $page->seo_title : $page->title; ?></title>
+		<meta name="description" content="<?= $page->seo_description ? $page->seo_description : 'Demokratie verstehen mit Witz und Verstand: Auf demokratiefoerderung.info lernst du, antidemokratische Tricks zu entlarven und mit Humor zu kontern. Satirisch, provokativ und direkt anwendbar!'; ?>">
+		<meta name="author" content="Thomas Evers">
+		
+		<link rel="icon" href="/favicon.ico">
+		<link rel="stylesheet" type="text/css" href="<?php echo $config->urls->templates; ?>styles/main.css" />
+
+		<!-- Open Graph Tags -->
+        	<meta property="og:title" content="<?= $page->seo_title ? $page->seo_title : $page->title; ?>">
+        	<meta property="og:description" content="<?= $page->seo_description ? $page->seo_description : 'Demokratie verstehen mit Witz und Verstand: Auf demokratiefoerderung.info lernst du, antidemokratische Tricks zu entlarven und mit Humor zu kontern. Satirisch, provokativ und direkt anwendbar!'; ?>">
+        	<meta property="og:image" content="<?= $page->card_image ? $page->card_image->httpUrl : '/site/templates/images/default-image.jpg'; ?>">
+        	<meta property="og:url" content="<?= $page->httpUrl; ?>">
+        	<meta property="og:type" content="website">
+        	<meta property="og:locale" content="de_DE">
         
-        <link rel="icon" href="/favicon.ico">
-        <link rel="stylesheet" type="text/css" href="<?php echo $config->urls->templates; ?>styles/main.css" />
+        	<!-- Twitter Cards -->
+        	<meta name="twitter:card" content="summary_large_image">
+        	<meta name="twitter:title" content="<?= $page->seo_title ? $page->seo_title : $page->title; ?>">
+        	<meta name="twitter:description" content="<?= $page->seo_description ? $page->seo_description : 'Demokratie verstehen mit Witz und Verstand: Auf demokratiefoerderung.info lernst du, antidemokratische Tricks zu entlarven und mit Humor zu kontern. Satirisch, provokativ und direkt anwendbar!'; ?>">
+        	<meta name="twitter:image" content="<?= $page->card_image ? $page->card_image->httpUrl : '/site/templates/images/default-image.jpg'; ?>">
+
+        	<link rel="canonical" href="<?= preg_replace('/^https?:\/\/www\./', 'https://', $page->httpUrl); ?>">
+    
+        	<script type="application/ld+json">
+            	{
+              		"@context": "https://schema.org",
+              		"@type": "WebPage",
+              		"name": "<?= $page->seo_title ? $page->seo_title : $page->title; ?>",
+              		"description": "<?= $page->seo_description ? $page->seo_description : 'Standardbeschreibung der Seite.'; ?>",
+              		"url": "<?= $page->httpUrl; ?>",
+              		"publisher": {
+                		"@type": "Organization",
+                		"name": "<?= $page->title; ?>",
+                		"logo": {
+                  			"@type": "ImageObject",
+                  			"url": "<?= $pages->get('/')->logo ? $pages->get('/')->logo->httpUrl : '/site/templates/images/default-logo.png'; ?>",
+                  			"width": 200,
+                  			"height": 50
+                		}
+              		},
+              		"image": "<?= $page->card_image ? $page->ocard_image->httpUrl : '/site/templates/images/default-image.jpg'; ?>",
+              		"mainEntityOfPage": {
+                	"@type": "WebPage",
+                	"@id": "<?= $page->httpUrl; ?>"
+              		}
+            	}
+            	</script>
 	</head>
 	<body id="html-body">
 	    
@@ -50,9 +91,8 @@ $home = $pages->get('/'); /** @var HomePage $home */
 	        
 	    </footer>
 	    
-	    <!-- Scripts -->
-	    
-		<script src="<?php echo $config->urls->templates; ?>scripts/main.js"></script>
+	<!-- Scripts -->
+	<script src="<?php echo $config->urls->templates; ?>scripts/main.js"></script>
 	    
 	</body>
 </html>
